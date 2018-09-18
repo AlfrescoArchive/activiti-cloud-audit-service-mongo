@@ -16,15 +16,45 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-import org.activiti.cloud.services.audit.mongo.events.model.Task;
 
-public class TaskCreatedEventDocument extends ProcessEngineEventDocument {
+import org.activiti.api.task.model.Task;
+import org.activiti.api.task.model.events.TaskRuntimeEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class TaskCreatedEventDocument extends TaskAuditEventDocument {
 
     protected static final String TASK_CREATED_EVENT = "TaskCreatedEvent";
 
-    private Task task;
+    public TaskCreatedEventDocument() {
+    }
 
-    public Task getTask() {
-        return task;
+    public TaskCreatedEventDocument(String eventId,
+                                    Long timestamp) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_CREATED.name());
+    }
+
+    public TaskCreatedEventDocument(String eventId,
+                                    Long timestamp,
+                                    String appName,
+                                    String appVersion,
+                                    String serviceName,
+                                    String serviceFullName,
+                                    String serviceType,
+                                    String serviceVersion,
+                                    Task task) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_CREATED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              task);
     }
 }

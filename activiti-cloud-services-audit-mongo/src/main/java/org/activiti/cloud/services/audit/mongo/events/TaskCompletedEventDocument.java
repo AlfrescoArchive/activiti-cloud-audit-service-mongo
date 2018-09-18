@@ -16,15 +16,45 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-import org.activiti.cloud.services.audit.mongo.events.model.Task;
 
-public class TaskCompletedEventDocument extends ProcessEngineEventDocument {
+import org.activiti.api.task.model.Task;
+import org.activiti.api.task.model.events.TaskRuntimeEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class TaskCompletedEventDocument extends TaskAuditEventDocument {
 
     protected static final String TASK_COMPLETED_EVENT = "TaskCompletedEvent";
 
-    private Task task;
+    public TaskCompletedEventDocument() {
+    }
 
-    public Task getTask() {
-        return task;
+    public TaskCompletedEventDocument(String eventId,
+                                      Long timestamp) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_COMPLETED.name());
+    }
+
+    public TaskCompletedEventDocument(String eventId,
+                                      Long timestamp,
+                                      String appName,
+                                      String appVersion,
+                                      String serviceName,
+                                      String serviceFullName,
+                                      String serviceType,
+                                      String serviceVersion,
+                                      Task task) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_COMPLETED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              task);
     }
 }

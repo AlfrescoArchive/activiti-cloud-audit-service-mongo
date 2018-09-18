@@ -16,24 +16,33 @@
 
 package org.activiti.cloud.services.audit.mongo.channel;
 
-import java.util.Arrays;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.activiti.cloud.services.audit.mongo.events.IgnoredProcessEngineEvent;
-import org.activiti.cloud.services.audit.mongo.events.ProcessEngineEventDocument;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.activiti.api.process.model.events.ProcessRuntimeEvent;
+import org.activiti.cloud.api.model.shared.events.CloudRuntimeEvent;
+import org.activiti.cloud.services.audit.api.converters.APIEventToEntityConverters;
+import org.activiti.cloud.services.audit.api.converters.EventToEntityConverter;
+import org.activiti.cloud.services.audit.mongo.events.AuditEventDocument;
 import org.activiti.cloud.services.audit.mongo.repository.EventsRepository;
+import org.activiti.cloud.services.audit.mongo.streams.AuditConsumerChannelHandlerImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
-
 public class AuditConsumerChannelHandlerTest {
 
     @InjectMocks
-    private AuditConsumerChannelHandler handler;
+    private AuditConsumerChannelHandlerImpl handler;
+
+    @Mock
+    private APIEventToEntityConverters converters;
 
     @Mock
     private EventsRepository eventsRepository;
@@ -46,15 +55,21 @@ public class AuditConsumerChannelHandlerTest {
     @Test
     public void receiveShouldStoreAllReceivedEvents() throws Exception {
         //given
-        ProcessEngineEventDocument firstEvent = mock(ProcessEngineEventDocument.class);
-        ProcessEngineEventDocument secondEvent = mock(ProcessEngineEventDocument.class);
-        IgnoredProcessEngineEvent ignoredEvent = new IgnoredProcessEngineEvent();
-        ProcessEngineEventDocument[] allEvents = {firstEvent, secondEvent, ignoredEvent};
+        CloudRuntimeEvent cloudRuntimeEvent = mock(CloudRuntimeEvent.class);
+        when(cloudRuntimeEvent.getEventType()).thenReturn(ProcessRuntimeEvent.ProcessEvents.PROCESS_CREATED);
+        EventToEntityConverter converter = mock(EventToEntityConverter.class);
+        when(converters.getConverterByEventTypeName(ProcessRuntimeEvent.ProcessEvents.PROCESS_CREATED.name())).thenReturn(converter);
+        AuditEventDocument entity = mock(AuditEventDocument.class);
+        when(converter.convertToEntity(cloudRuntimeEvent)).thenReturn(entity);
+
+        CloudRuntimeEvent[] events = {cloudRuntimeEvent};
+        List<AuditEventDocument> incomingEvents = new ArrayList();
+        incomingEvents.add(entity);
 
         //when
-        handler.receive(allEvents);
+        handler.receiveCloudRuntimeEvent(events);
 
-        //then only non ignored events should be stored
-        verify(eventsRepository).saveAll(Arrays.asList(firstEvent, secondEvent));
+        //then
+        verify(eventsRepository).saveAll(incomingEvents);
     }
 }

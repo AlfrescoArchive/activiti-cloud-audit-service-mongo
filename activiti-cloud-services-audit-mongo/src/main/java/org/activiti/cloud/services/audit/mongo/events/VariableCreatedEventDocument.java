@@ -16,28 +16,45 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class VariableCreatedEventDocument extends ProcessEngineEventDocument {
+
+import org.activiti.api.model.shared.event.VariableEvent;
+import org.activiti.api.model.shared.model.VariableInstance;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class VariableCreatedEventDocument extends VariableAuditEventDocument {
 
     protected static final String VARIABLE_CREATED_EVENT = "VariableCreatedEvent";
 
-    private String variableName;
-    private String variableValue;
-    private String variableType;
-    private String taskId;
-
-    public String getVariableName() {
-        return variableName;
+    public VariableCreatedEventDocument() {
     }
 
-    public String getVariableValue() {
-        return variableValue;
+    public VariableCreatedEventDocument(String eventId,
+                                        Long timestamp) {
+        super(eventId,
+              timestamp,
+              VariableEvent.VariableEvents.VARIABLE_CREATED.name());
     }
 
-    public String getVariableType() {
-        return variableType;
-    }
-
-    public String getTaskId() {
-        return taskId;
+    public VariableCreatedEventDocument(String eventId,
+                                        Long timestamp,
+                                        String appName,
+                                        String appVersion,
+                                        String serviceName,
+                                        String serviceFullName,
+                                        String serviceType,
+                                        String serviceVersion,
+                                        VariableInstance variableInstance) {
+        super(eventId,
+              timestamp,
+              VariableEvent.VariableEvents.VARIABLE_CREATED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              variableInstance);
     }
 }

@@ -16,9 +16,78 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class ProcessCancelledEventDocument extends BaseProcessEventDocument {
+
+import org.activiti.api.process.model.ProcessInstance;
+import org.activiti.api.process.model.events.ProcessRuntimeEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class ProcessCancelledEventDocument extends ProcessAuditEventDocument {
 
     protected static final String PROCESS_CANCELLED_EVENT = "ProcessCancelledEvent";
+
+    public ProcessCancelledEventDocument() {
+    }
+
+    public ProcessCancelledEventDocument(String eventId,
+                                         Long timestamp,
+                                         String cause) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name());
+        this.cause = cause;
+    }
+
+    public ProcessCancelledEventDocument(String eventId,
+                                         Long timestamp,
+                                         String appName,
+                                         String appVersion,
+                                         String serviceName,
+                                         String serviceFullName,
+                                         String serviceType,
+                                         String serviceVersion,
+                                         ProcessInstance processInstance,
+                                         String nestedProcessDefinitionId,
+                                         String nestedProcessInstanceId,
+                                         String cause) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              processInstance,
+              nestedProcessDefinitionId,
+              nestedProcessInstanceId);
+        this.cause = cause;
+    }
+
+    public ProcessCancelledEventDocument(String eventId,
+                                         Long timestamp,
+                                         String appName,
+                                         String appVersion,
+                                         String serviceName,
+                                         String serviceFullName,
+                                         String serviceType,
+                                         String serviceVersion,
+                                         ProcessInstance processInstance,
+                                         String cause) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              processInstance);
+        this.cause = cause;
+    }
 
     private String cause;
 

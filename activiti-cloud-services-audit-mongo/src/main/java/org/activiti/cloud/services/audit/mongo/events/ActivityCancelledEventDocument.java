@@ -16,11 +16,52 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class ActivityCancelledEventDocument extends BaseActivityEventDocument {
+import org.activiti.api.process.model.BPMNActivity;
+import org.activiti.api.process.model.events.BPMNActivityEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class ActivityCancelledEventDocument extends BPMNActivityAuditEventDocument {
 
     protected static final String ACTIVITY_CANCELLED_EVENT = "ActivityCancelledEvent";
 
     private String cause;
+
+    public ActivityCancelledEventDocument() {
+    }
+
+    public ActivityCancelledEventDocument(String eventId,
+                                          Long timestamp,
+                                          String cause) {
+        super(eventId,
+              timestamp,
+              BPMNActivityEvent.ActivityEvents.ACTIVITY_CANCELLED.name());
+        this.cause = cause;
+    }
+
+    public ActivityCancelledEventDocument(String eventId,
+                                          Long timestamp,
+                                          String appName,
+                                          String appVersion,
+                                          String serviceName,
+                                          String serviceFullName,
+                                          String serviceType,
+                                          String serviceVersion,
+                                          BPMNActivity bpmnActivity,
+                                          String cause) {
+        super(eventId,
+              timestamp,
+              BPMNActivityEvent.ActivityEvents.ACTIVITY_CANCELLED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              bpmnActivity);
+        this.cause = cause;
+    }
 
     public String getCause() {
         return cause;

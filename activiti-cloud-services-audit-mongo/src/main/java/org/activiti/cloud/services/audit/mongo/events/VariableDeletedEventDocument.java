@@ -16,23 +16,45 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class VariableDeletedEventDocument extends ProcessEngineEventDocument {
+
+import org.activiti.api.model.shared.event.VariableEvent;
+import org.activiti.api.model.shared.model.VariableInstance;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class VariableDeletedEventDocument extends VariableAuditEventDocument {
 
     protected static final String VARIABLE_DELETED_EVENT = "VariableDeletedEvent";
 
-    private String variableName;
-    private String variableType;
-    private String taskId;
-
-    public String getVariableName() {
-        return variableName;
+    public VariableDeletedEventDocument() {
     }
 
-    public String getVariableType() {
-        return variableType;
+    public VariableDeletedEventDocument(String eventId,
+                                        Long timestamp) {
+        super(eventId,
+              timestamp,
+              VariableEvent.VariableEvents.VARIABLE_DELETED.name());
     }
 
-    public String getTaskId() {
-        return taskId;
+    public VariableDeletedEventDocument(String eventId,
+                                        Long timestamp,
+                                        String appName,
+                                        String appVersion,
+                                        String serviceName,
+                                        String serviceFullName,
+                                        String serviceType,
+                                        String serviceVersion,
+                                        VariableInstance variableInstance) {
+        super(eventId,
+              timestamp,
+              VariableEvent.VariableEvents.VARIABLE_DELETED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              variableInstance);
     }
 }
