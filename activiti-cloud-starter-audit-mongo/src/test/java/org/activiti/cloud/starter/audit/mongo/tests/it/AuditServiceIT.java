@@ -48,6 +48,7 @@ import org.activiti.cloud.api.task.model.impl.events.CloudTaskAssignedEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCancelledEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCompletedEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCreatedEventImpl;
+import org.activiti.cloud.services.audit.mongo.converters.json.TaskMongoDeserializer;
 import org.activiti.cloud.services.audit.mongo.repository.EventsRepository;
 import org.activiti.cloud.starters.test.MyProducer;
 import org.activiti.runtime.api.model.impl.BPMNActivityImpl;
@@ -58,11 +59,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -79,7 +90,28 @@ public class AuditServiceIT {
     @Autowired
     private MyProducer producer;
 
+    @Autowired
+    private TestRestTemplate restTemplate;
 
+    @TestConfiguration
+    static class Config {
+
+        @Bean
+        public RestTemplateBuilder restTemplateBuilder(ObjectMapper mapper) {
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+                             false);
+            Jackson2HalModule jackson2HalModule = new Jackson2HalModule();
+            jackson2HalModule.addDeserializer(TaskImpl.class, new TaskMongoDeserializer());
+            mapper.registerModule(jackson2HalModule);
+
+            MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+            jackson2HttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaTypes.HAL_JSON));
+            jackson2HttpMessageConverter.setObjectMapper(mapper);
+
+            return new RestTemplateBuilder().additionalMessageConverters(
+                                                                         jackson2HttpMessageConverter);
+        }
+    }
 
     @Before
     public void setUp() {

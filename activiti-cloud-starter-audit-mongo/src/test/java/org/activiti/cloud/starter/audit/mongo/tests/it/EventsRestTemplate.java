@@ -18,64 +18,31 @@ package org.activiti.cloud.starter.audit.mongo.tests.it;
 
 import static org.activiti.test.Assertions.assertThat;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.activiti.cloud.api.model.shared.events.CloudRuntimeEvent;
 import org.activiti.cloud.services.test.identity.keycloak.interceptor.KeycloakTokenProducer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class EventsRestTemplate {
 
     private static final String RELATIVE_EVENTS_ENDPOINT = "/v1/events";
 
-    private ObjectMapper mapper;
-
     private KeycloakTokenProducer keycloakTokenProducer;
 
-    public EventsRestTemplate(ObjectMapper mapper, KeycloakTokenProducer keycloakTokenProducer) {
-        this.mapper = mapper;
+    public EventsRestTemplate(KeycloakTokenProducer keycloakTokenProducer, TestRestTemplate restTemplate) {
         this.keycloakTokenProducer = keycloakTokenProducer;
+        this.restTemplate = restTemplate;
     }
 
-    @Bean
-    public RestTemplateBuilder restTemplateBuilder(List<Module> modules) {
-
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-                         false);
-        mapper.registerModule(new Jackson2HalModule());
-        for (Module module : modules) {
-            mapper.registerModule(module);
-        }
-
-        MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        jackson2HttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaTypes.HAL_JSON));
-        jackson2HttpMessageConverter.setObjectMapper(mapper);
-
-        return new RestTemplateBuilder().additionalMessageConverters(
-                                                                     jackson2HttpMessageConverter);
-    }
-
-    @Autowired
-    private TestRestTemplate restTemplate;
+    public TestRestTemplate restTemplate;
 
     public ResponseEntity<PagedResources<CloudRuntimeEvent>> executeFindAll() {
         ResponseEntity<PagedResources<CloudRuntimeEvent>> eventsResponse = restTemplate.exchange(RELATIVE_EVENTS_ENDPOINT,
