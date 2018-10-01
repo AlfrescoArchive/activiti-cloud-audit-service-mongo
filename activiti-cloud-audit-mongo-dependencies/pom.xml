@@ -6,7 +6,6 @@
     <groupId>org.activiti.cloud.audit</groupId>
     <artifactId>activiti-cloud-audit-service-mongo-parent</artifactId>
     <version>7.0.0-SNAPSHOT</version>
-    <relativePath>../</relativePath>
   </parent>
   <artifactId>activiti-cloud-audit-mongo-dependencies</artifactId>
   <version>7.0.0-SNAPSHOT</version>
