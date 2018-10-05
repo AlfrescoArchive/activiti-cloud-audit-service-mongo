@@ -10,7 +10,7 @@
   <artifactId>activiti-cloud-audit-mongo-dependencies</artifactId>
   <version>7.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Activiti Cloud :: Audit Dependencies BOM (Bill Of Materials)</name>
+  <name>Activiti Cloud :: Audit MongoDB Dependencies BOM (Bill Of Materials)</name>
   <dependencyManagement>
     <dependencies>
       <dependency>
