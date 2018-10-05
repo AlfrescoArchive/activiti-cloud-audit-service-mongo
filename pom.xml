@@ -38,17 +38,9 @@
         <enabled>true</enabled>
       </releases>
     </repository>
-    <repository>
-      <id>activiti-snapshots</id>
-      <name>Activiti Releases</name>
-      <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
   </repositories>
 <properties>
-    <activiti-cloud-service-common.version>7.0.16</activiti-cloud-service-common.version>
+    <activiti-cloud-service-common.version>7.0.22</activiti-cloud-service-common.version>
     <activiti-cloud-audit.version>${project.version}</activiti-cloud-audit.version>
   </properties>
   <dependencyManagement>
