@@ -13,7 +13,6 @@
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-identity-keycloak</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.activiti.cloud.audit</groupId>
@@ -22,7 +21,6 @@
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-metadata</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -79,17 +77,14 @@
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-monitoring</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-tracing</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-logging</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.data</groupId>
@@ -158,7 +153,6 @@
     <dependency>
       <groupId>org.activiti.cloud</groupId>
       <artifactId>activiti-cloud-services-test</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
