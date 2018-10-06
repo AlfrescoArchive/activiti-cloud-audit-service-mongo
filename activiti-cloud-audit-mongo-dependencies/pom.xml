@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.activiti.cloud.audit</groupId>
+    <groupId>org.activiti.cloud.audit.mongo</groupId>
     <artifactId>activiti-cloud-audit-service-mongo-parent</artifactId>
     <version>7.0.0-SNAPSHOT</version>
   </parent>
@@ -14,6 +14,13 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.activiti.cloud.build</groupId>
+        <artifactId>activiti-cloud-dependencies-parent</artifactId>
+        <version>${activiti-cloud-build.version}</version>
+        <scope>import</scope>
+        <type>pom</type>       
+      </dependency>
+      <dependency>
         <groupId>org.activiti.cloud.common</groupId>
         <artifactId>activiti-cloud-service-common-dependencies</artifactId>
         <version>${activiti-cloud-service-common.version}</version>
@@ -22,33 +29,18 @@
       </dependency>
       <dependency>
         <groupId>org.activiti.cloud.audit</groupId>
-        <artifactId>activiti-cloud-services-audit-parent</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.activiti.cloud.audit</groupId>
-        <artifactId>activiti-cloud-services-audit-jpa</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
+        <artifactId>activiti-cloud-audit-service-mongo-parent</artifactId>
+        <version>${activiti-cloud-audit-mongo.version}</version>
       </dependency>
       <dependency>
         <groupId>org.activiti.cloud.audit</groupId>
         <artifactId>activiti-cloud-services-audit-mongo</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.activiti.cloud.audit</groupId>
-        <artifactId>activiti-cloud-starter-audit</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
+        <version>${activiti-cloud-audit-mongo.version}</version>
       </dependency>
       <dependency>
         <groupId>org.activiti.cloud.audit</groupId>
         <artifactId>activiti-cloud-starter-audit-mongo</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.activiti.cloud.audit</groupId>
-        <artifactId>activiti-cloud-services-audit-api</artifactId>
-        <version>${activiti-cloud-audit.version}</version>
+        <version>${activiti-cloud-audit-mongo.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
