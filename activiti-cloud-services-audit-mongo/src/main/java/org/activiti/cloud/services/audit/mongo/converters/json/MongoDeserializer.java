@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class MongoDeserializer<T> extends StdDeserializer<T>{
 
+    private static final long serialVersionUID = 6716934799936856568L;
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     static {
@@ -37,6 +38,8 @@ public class MongoDeserializer<T> extends StdDeserializer<T>{
             SimpleModule module = new SimpleModule("mapCommonModelInterfaces",
                                                    Version.unknownVersion());
             SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver() {
+                private static final long serialVersionUID = 2379507897444040983L;
+
                 //this is a workaround for https://github.com/FasterXML/jackson-databind/issues/2019
                 //once version 2.9.6 is related we can remove this @override method
                 @Override

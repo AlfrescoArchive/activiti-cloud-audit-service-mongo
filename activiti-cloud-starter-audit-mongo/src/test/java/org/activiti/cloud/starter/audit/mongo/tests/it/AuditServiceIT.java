@@ -48,12 +48,21 @@ import org.activiti.cloud.api.task.model.impl.events.CloudTaskAssignedEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCancelledEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCompletedEventImpl;
 import org.activiti.cloud.api.task.model.impl.events.CloudTaskCreatedEventImpl;
+import org.activiti.cloud.services.audit.mongo.converters.json.ActivityMongoSerializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.ProcessMongoSerializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.SequenceMongoDeserializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.SequenceMongoSerializer;
 import org.activiti.cloud.services.audit.mongo.converters.json.TaskMongoDeserializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.TaskMongoSerializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.VariableMongoDeserializer;
+import org.activiti.cloud.services.audit.mongo.converters.json.VariableMongoSerializer;
 import org.activiti.cloud.services.audit.mongo.repository.EventsRepository;
 import org.activiti.cloud.starters.test.MyProducer;
 import org.activiti.runtime.api.model.impl.BPMNActivityImpl;
 import org.activiti.runtime.api.model.impl.ProcessInstanceImpl;
+import org.activiti.runtime.api.model.impl.SequenceFlowImpl;
 import org.activiti.runtime.api.model.impl.TaskImpl;
+import org.activiti.runtime.api.model.impl.VariableInstanceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -101,7 +110,16 @@ public class AuditServiceIT {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
                              false);
             Jackson2HalModule jackson2HalModule = new Jackson2HalModule();
+            jackson2HalModule.addDeserializer(BPMNActivityImpl.class, new ActivityMongoDeserializer());
+            jackson2HalModule.addDeserializer(ProcessInstanceImpl.class, new ProcessMongoDeserializer());
+            jackson2HalModule.addDeserializer(SequenceFlowImpl.class, new SequenceMongoDeserializer());
             jackson2HalModule.addDeserializer(TaskImpl.class, new TaskMongoDeserializer());
+            jackson2HalModule.addDeserializer(VariableInstanceImpl.class, new VariableMongoDeserializer());
+            jackson2HalModule.addSerializer(new ActivityMongoSerializer());
+            jackson2HalModule.addSerializer(new ProcessMongoSerializer());
+            jackson2HalModule.addSerializer(new SequenceMongoSerializer());
+            jackson2HalModule.addSerializer(new TaskMongoSerializer());
+            jackson2HalModule.addSerializer(new VariableMongoSerializer());
             mapper.registerModule(jackson2HalModule);
 
             MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();

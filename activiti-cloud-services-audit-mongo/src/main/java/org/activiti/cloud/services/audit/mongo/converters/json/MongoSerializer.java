@@ -29,6 +29,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class MongoSerializer<T> extends StdSerializer<T>{
 
+    private static final long serialVersionUID = 8321567206583190124L;
+
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     static {
@@ -36,6 +38,8 @@ public class MongoSerializer<T> extends StdSerializer<T>{
             SimpleModule module = new SimpleModule("mapCommonModelInterfaces",
                                                    Version.unknownVersion());
             SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver() {
+                private static final long serialVersionUID = -5067983104871707780L;
+
                 //this is a workaround for https://github.com/FasterXML/jackson-databind/issues/2019
                 //once version 2.9.6 is related we can remove this @override method
                 @Override
@@ -71,7 +75,7 @@ public class MongoSerializer<T> extends StdSerializer<T>{
     @Override
     public void serialize(T value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         try {
-            gen.writeString(serialize(value));
+            gen.writeRawValue((serialize(value)));
         } catch (JsonProcessingException e) {
             throw new AuditException("Unable to serialize object.",
                                      e);
