@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableActivitiAuditMongo
-@ComponentScan("org.activiti")
+@ComponentScan({"org.activiti.cloud.starters.test", "org.activiti.cloud.starter.audit.mongo.tests.it", "org.activiti.cloud.services.test.identity.keycloak.interceptor"})
 public class MongoAuditApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

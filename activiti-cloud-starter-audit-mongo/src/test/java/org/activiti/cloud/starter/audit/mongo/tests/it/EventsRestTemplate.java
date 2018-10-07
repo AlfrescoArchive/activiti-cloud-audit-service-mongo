@@ -42,7 +42,7 @@ public class EventsRestTemplate {
         this.restTemplate = restTemplate;
     }
 
-    public TestRestTemplate restTemplate;
+    private TestRestTemplate restTemplate;
 
     public ResponseEntity<PagedResources<CloudRuntimeEvent>> executeFindAll() {
         ResponseEntity<PagedResources<CloudRuntimeEvent>> eventsResponse = restTemplate.exchange(RELATIVE_EVENTS_ENDPOINT,

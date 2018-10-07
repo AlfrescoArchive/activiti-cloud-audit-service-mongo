@@ -15,6 +15,10 @@
       <artifactId>activiti-cloud-services-common-identity-keycloak</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.activiti.cloud.common</groupId>
+      <artifactId>activiti-cloud-services-common-security-keycloak</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.activiti.cloud.audit.mongo</groupId>
       <artifactId>activiti-cloud-services-audit-mongo</artifactId>
     </dependency>
@@ -233,15 +237,15 @@
                   </run>
                 </image>
                 <image>
-                  <name>activiti/activiti-cloud-sso-idm</name>
-                  <alias>activiti-cloud-sso-idm</alias>
+                  <name>activiti/activiti-keycloak</name>
+                  <alias>activiti-keycloak</alias>
                   <run>
                     <ports>
                       <port>8180:8180</port>
                     </ports>
                     <wait>
                       <log>Keycloak .* started in</log>
-                      <time>40000</time>
+                      <time>400000</time>
                     </wait>
                   </run>
                 </image>
@@ -255,7 +259,7 @@
                     </ports>
                     <wait>
                       <log>Server startup complete</log>
-                      <time>15000</time>
+                      <time>150000</time>
                     </wait>
                   </run>
                 </image>
