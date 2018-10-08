@@ -75,7 +75,7 @@ public class MongoSerializer<T> extends StdSerializer<T>{
     @Override
     public void serialize(T value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         try {
-            gen.writeRawValue((serialize(value)));
+            gen.writeString(serialize(value));
         } catch (JsonProcessingException e) {
             throw new AuditException("Unable to serialize object.",
                                      e);

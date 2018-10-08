@@ -24,9 +24,6 @@ import com.fasterxml.jackson.databind.module.SimpleSerializers;
 @Component
 public class JacksonConfig extends SimpleModule {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5022833438563372295L;
 
     @Override public void setupModule(SetupContext context) {

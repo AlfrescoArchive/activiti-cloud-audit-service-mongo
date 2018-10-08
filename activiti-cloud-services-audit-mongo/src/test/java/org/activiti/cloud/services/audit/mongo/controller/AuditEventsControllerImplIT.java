@@ -238,9 +238,9 @@ public class AuditEventsControllerImplIT {
                                        subsectionWithPath("nestedProcessInstanceId").description("Nested process instance id"),
                                        subsectionWithPath("serviceName").description("The service name"),
                                        subsectionWithPath("entityId").description("the entity idCloudProcessSuspendedEventImpl"),
-                                       subsectionWithPath("entity").description("the process instance entity"),
-                                       subsectionWithPath("entity.processDefinitionId").description("The process definition id"),
-                                       subsectionWithPath("entity.id").description("The process instance id")
+                                       subsectionWithPath("entity").description("the process instance entity")//,
+                                       //subsectionWithPath("entity.processDefinitionId").description("The process definition id"),
+                                       //subsectionWithPath("entity.id").description("The process instance id")
 
                                 )));
     }
