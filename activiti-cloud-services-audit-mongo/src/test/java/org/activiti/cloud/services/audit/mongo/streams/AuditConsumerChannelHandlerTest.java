@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.activiti.cloud.services.audit.mongo.channel;
+package org.activiti.cloud.services.audit.mongo.streams;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

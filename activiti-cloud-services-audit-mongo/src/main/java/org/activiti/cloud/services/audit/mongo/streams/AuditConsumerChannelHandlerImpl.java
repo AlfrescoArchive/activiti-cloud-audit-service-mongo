@@ -21,11 +21,11 @@ import org.springframework.stereotype.Component;
 @EnableBinding(AuditConsumerChannels.class)
 public class AuditConsumerChannelHandlerImpl implements AuditConsumerChannelHandler {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(AuditConsumerChannelHandlerImpl.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(AuditConsumerChannelHandlerImpl.class);
 
-	private final EventsRepository eventsRepository;
+    private final EventsRepository eventsRepository;
 
-	private final APIEventToEntityConverters eventConverters;
+    private final APIEventToEntityConverters eventConverters;
 
     @Autowired
     public AuditConsumerChannelHandlerImpl(EventsRepository eventsRepository,
@@ -34,11 +34,11 @@ public class AuditConsumerChannelHandlerImpl implements AuditConsumerChannelHand
         this.eventConverters = eventConverters;
     }
 
-	@Override
-	@StreamListener(AuditConsumerChannels.AUDIT_CONSUMER)
-	public void receiveCloudRuntimeEvent(CloudRuntimeEvent<?, ?>... events) {
-		List<AuditEventDocument> incomingEvents = new ArrayList();
-		if (events != null) {
+    @Override
+    @StreamListener(AuditConsumerChannels.AUDIT_CONSUMER)
+    public void receiveCloudRuntimeEvent(CloudRuntimeEvent<?, ?>... events) {
+        List<AuditEventDocument> incomingEvents = new ArrayList();
+        if (events != null) {
             for (CloudRuntimeEvent event : events) {
                 EventToEntityConverter converter = eventConverters.getConverterByEventTypeName(event.getEventType().name());
                 if (converter != null) {
@@ -49,6 +49,6 @@ public class AuditConsumerChannelHandlerImpl implements AuditConsumerChannelHand
             }
         }
         eventsRepository.saveAll(incomingEvents);
-	}
+    }
 
 }
