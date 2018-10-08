@@ -16,15 +16,44 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-import org.activiti.cloud.services.audit.mongo.events.model.Task;
+import org.activiti.api.task.model.Task;
+import org.activiti.api.task.model.events.TaskRuntimeEvent;
 
-public class TaskAssignedEventDocument extends ProcessEngineEventDocument {
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class TaskAssignedEventDocument extends TaskAuditEventDocument {
 
     protected static final String TASK_ASSIGNED_EVENT = "TaskAssignedEvent";
 
-    private Task task;
+    public TaskAssignedEventDocument() {
+    }
 
-    public Task getTask() {
-        return task;
+    public TaskAssignedEventDocument(String eventId,
+                                     Long timestamp) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_ASSIGNED.name());
+    }
+
+    public TaskAssignedEventDocument(String eventId,
+                                     Long timestamp,
+                                     String appName,
+                                     String appVersion,
+                                     String serviceName,
+                                     String serviceFullName,
+                                     String serviceType,
+                                     String serviceVersion,
+                                     Task task) {
+        super(eventId,
+              timestamp,
+              TaskRuntimeEvent.TaskEvents.TASK_ASSIGNED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              task);
     }
 }

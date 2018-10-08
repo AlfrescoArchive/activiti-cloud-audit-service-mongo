@@ -16,11 +16,37 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public abstract class IntegrationEventDocument extends ProcessEngineEventDocument {
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public abstract class IntegrationEventDocument extends BPMNActivityAuditEventDocument {
 
     private String integrationContextId;
 
     private String flowNodeId;
+
+    public IntegrationEventDocument() {
+    }
+
+    public IntegrationEventDocument(String eventId,
+                                  Long timestamp,
+                                  String eventType) {
+        super(eventId,
+              timestamp,
+              eventType);
+    }
+
+    public IntegrationEventDocument(String eventId,
+                                  Long timestamp,
+                                  String eventType,
+                                  String integrationContextId,
+                                  String flowNodeId) {
+        super(eventId,
+              timestamp,
+              eventType);
+        this.integrationContextId = integrationContextId;
+        this.flowNodeId = flowNodeId;
+    }
 
     public String getIntegrationContextId() {
         return integrationContextId;

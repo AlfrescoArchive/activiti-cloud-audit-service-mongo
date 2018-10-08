@@ -16,7 +16,48 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class ProcessStartedEventDocument extends BaseProcessEventDocument {
+import org.activiti.api.process.model.ProcessInstance;
+import org.activiti.api.process.model.events.ProcessRuntimeEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class ProcessStartedEventDocument extends ProcessAuditEventDocument {
 
     protected static final String PROCESS_STARTED_EVENT = "ProcessStartedEvent";
+
+    public ProcessStartedEventDocument() {
+    }
+
+    public ProcessStartedEventDocument(String eventId,
+                                       Long timestamp) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_STARTED.name());
+    }
+
+    public ProcessStartedEventDocument(String eventId,
+                                       Long timestamp,
+                                       String appName,
+                                       String appVersion,
+                                       String serviceName,
+                                       String serviceFullName,
+                                       String serviceType,
+                                       String serviceVersion,
+                                       ProcessInstance processInstance,
+                                       String nestedProcessDefinitionId,
+                                       String nestedProcessInstanceId) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_STARTED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              processInstance,
+              nestedProcessDefinitionId,
+              nestedProcessInstanceId);
+    }
 }

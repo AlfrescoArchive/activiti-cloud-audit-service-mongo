@@ -16,15 +16,69 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-import org.activiti.cloud.services.audit.mongo.events.model.ProcessInstance;
+import org.activiti.api.process.model.ProcessInstance;
+import org.activiti.api.process.model.events.ProcessRuntimeEvent;
 
-public class ProcessCompletedEventDocument extends ProcessEngineEventDocument {
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class ProcessCompletedEventDocument extends ProcessAuditEventDocument {
 
     protected static final String PROCESS_COMPLETED_EVENT = "ProcessCompletedEvent";
 
-    private ProcessInstance processInstance;
+    public ProcessCompletedEventDocument() {
+    }
 
-    public ProcessInstance getProcessInstance() {
-        return processInstance;
+    public ProcessCompletedEventDocument(String eventId,
+                                         Long timestamp) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_COMPLETED.name());
+    }
+
+    public ProcessCompletedEventDocument(String eventId,
+                                         Long timestamp,
+                                         String appName,
+                                         String appVersion,
+                                         String serviceName,
+                                         String serviceFullName,
+                                         String serviceType,
+                                         String serviceVersion,
+                                         ProcessInstance processInstance,
+                                         String nestedProcessDefinitionId,
+                                         String nestedProcessInstanceId) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_COMPLETED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              processInstance,
+              nestedProcessDefinitionId,
+              nestedProcessInstanceId);
+    }
+
+    public ProcessCompletedEventDocument(String eventId,
+                                         Long timestamp,
+                                         String appName,
+                                         String appVersion,
+                                         String serviceName,
+                                         String serviceFullName,
+                                         String serviceType,
+                                         String serviceVersion,
+                                         ProcessInstance processInstance) {
+        super(eventId,
+              timestamp,
+              ProcessRuntimeEvent.ProcessEvents.PROCESS_COMPLETED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              processInstance);
     }
 }

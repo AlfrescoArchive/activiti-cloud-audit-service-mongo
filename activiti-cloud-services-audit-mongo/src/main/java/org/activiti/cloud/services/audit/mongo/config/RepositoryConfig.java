@@ -1,13 +1,13 @@
 package org.activiti.cloud.services.audit.mongo.config;
 
-import org.activiti.cloud.services.audit.mongo.events.ProcessCancelledEventDocument;
-import org.activiti.cloud.services.audit.mongo.events.TaskCompletedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.ActivityCompletedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.ActivityStartedEventDocument;
+import org.activiti.cloud.services.audit.mongo.events.ProcessCancelledEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.ProcessCompletedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.ProcessStartedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.SequenceFlowTakenEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.TaskAssignedEventDocument;
+import org.activiti.cloud.services.audit.mongo.events.TaskCompletedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.TaskCreatedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.VariableCreatedEventDocument;
 import org.activiti.cloud.services.audit.mongo.events.VariableDeletedEventDocument;
@@ -26,7 +26,7 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.setBasePath("/v1");
-        
+
         // Expose only repositories annotated with @RepositoryRestResource
         config.setRepositoryDetectionStrategy(RepositoryDetectionStrategies.ANNOTATED);
 

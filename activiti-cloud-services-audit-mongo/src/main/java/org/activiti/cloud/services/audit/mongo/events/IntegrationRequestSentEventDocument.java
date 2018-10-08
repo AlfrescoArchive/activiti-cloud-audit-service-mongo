@@ -16,8 +16,33 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
 public class IntegrationRequestSentEventDocument extends IntegrationEventDocument {
 
     protected static final String INTEGRATION_REQUEST_SENT_EVENT = "IntegrationRequestSentEvent";
 
+    public IntegrationRequestSentEventDocument() {
+    }
+
+    public IntegrationRequestSentEventDocument(String eventId,
+                                             Long timestamp,
+                                             String eventType) {
+        super(eventId,
+              timestamp,
+              eventType);
+    }
+
+    public IntegrationRequestSentEventDocument(String eventId,
+                                             Long timestamp,
+                                             String eventType,
+                                             String integrationContextId,
+                                             String flowNodeId) {
+        super(eventId,
+              timestamp,
+              eventType,
+              integrationContextId,
+              flowNodeId);
+    }
 }

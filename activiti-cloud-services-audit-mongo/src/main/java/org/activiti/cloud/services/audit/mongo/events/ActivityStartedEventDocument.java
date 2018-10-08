@@ -16,7 +16,44 @@
 
 package org.activiti.cloud.services.audit.mongo.events;
 
-public class ActivityStartedEventDocument extends BaseActivityEventDocument {
+import org.activiti.api.process.model.BPMNActivity;
+import org.activiti.api.process.model.events.BPMNActivityEvent;
+
+import com.querydsl.core.annotations.QueryEntity;
+
+@QueryEntity
+public class ActivityStartedEventDocument extends BPMNActivityAuditEventDocument {
 
     protected static final String ACTIVITY_STARTED_EVENT = "ActivityStartedEvent";
+
+    public ActivityStartedEventDocument() {
+    }
+
+    public ActivityStartedEventDocument(String eventId,
+                                        Long timestamp) {
+        super(eventId,
+              timestamp,
+              BPMNActivityEvent.ActivityEvents.ACTIVITY_STARTED.name());
+    }
+
+    public ActivityStartedEventDocument(String eventId,
+                                        Long timestamp,
+                                        String appName,
+                                        String appVersion,
+                                        String serviceName,
+                                        String serviceFullName,
+                                        String serviceType,
+                                        String serviceVersion,
+                                        BPMNActivity bpmnActivity) {
+        super(eventId,
+              timestamp,
+              BPMNActivityEvent.ActivityEvents.ACTIVITY_STARTED.name(),
+              appName,
+              appVersion,
+              serviceName,
+              serviceFullName,
+              serviceType,
+              serviceVersion,
+              bpmnActivity);
+    }
 }
